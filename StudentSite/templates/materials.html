@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Materials</title>
+</head>
+<body>
+{% for material in materials %}
+    <h6><a href="/materials/get/{{ material.id }}">{{ material.upload_material}} </a></h6>
+{% endfor %}
+</body>
+</html>
