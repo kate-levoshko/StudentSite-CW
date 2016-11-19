@@ -8,7 +8,7 @@ from django.contrib.auth import logout as dj_logout
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
-
+import sys
 def home(request):
     if request.user.is_authenticated():
         username = request.user.username
@@ -16,16 +16,18 @@ def home(request):
         username = None
     return render(request, 'home.html', {'username': username})
 
+def about(request):
+    return render(request, 'about.html')
+
 def all_materials(request):
     return render_to_response('materials.html', {'materials': Help_materials.objects.all(), 'user_name': auth.get_user(request).username} )
 
 def material_by_id(request, material_id):
-     if Help_materials.objects.get(id=int(material_id)):
-        return render_to_response('material.html', {'material': Help_materials.objects.get(id=int(material_id))})
-     else:
+     try:
+         h = Help_materials.objects.get(id=int(material_id))
+         return render_to_response('material.html', {'material': Help_materials.objects.get(id=int(material_id))})
+     except:
         render_to_response('404.html', context_instance=RequestContext(request))
-
-
 
 
 def login(request):
@@ -56,16 +58,12 @@ def register(request):
         new_userform = UserCreationForm(request.POST)
         if new_userform.is_valid():
             new_userform.save()
-            newuser = authenticate(username=new_userform.cleaned_data['username'], password=new_userform.cleaned_data['password'])
+            newuser = authenticate(username=new_userform.cleaned_data['username'], password=new_userform.cleaned_data['password2'])
             auth.login(request, newuser)
             return HttpResponseRedirect("/")
         else:
             args['form'] = new_userform
-            # return render_to_response('registration.html', args)
-            # return render_to_response('registration.html', context_instance=RequestContext(request))
-            return
-            render(request, "registration.html", {
-                'form': form,
-            })
+    else:
+        return render_to_response('registration.html', {})
 
 
