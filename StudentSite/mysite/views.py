@@ -5,26 +5,29 @@ from django.contrib import auth
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as dj_login
 from django.contrib.auth import logout as dj_logout
-from django.contrib.auth.forms import UserCreationForm
+
 from django.http import HttpResponseRedirect
+from django.http import HttpResponse
+import  json
 from django.contrib.auth.models import User
+
 import sys
-def home(request):
+
+def home (request):
     if request.user.is_authenticated():
         username = request.user.username
     else:
         username = None
     return render(request, 'home.html', {'username': username})
 
-def about(request):
+def about( request):
     return render(request, 'about.html')
 
 def all_materials(request):
-    return render_to_response('materials.html', {'materials': Help_materials.objects.all(), 'user_name': auth.get_user(request).username} )
+        return render_to_response('materials.html', {'materials': Help_materials.objects.all(), 'user_name': auth.get_user(request).username} )
 
 def material_by_id(request, material_id):
      try:
-         h = Help_materials.objects.get(id=int(material_id))
          return render_to_response('material.html', {'material': Help_materials.objects.get(id=int(material_id))})
      except:
         render_to_response('404.html', context_instance=RequestContext(request))
@@ -52,17 +55,16 @@ def logout(request):
 
 
 def register(request):
-    args = {}
-    args['form'] = UserCreationForm()
-    if request.POST:
-        new_userform = UserCreationForm(request.POST)
-        if new_userform.is_valid():
-            new_userform.save()
-            newuser = authenticate(username=new_userform.cleaned_data['username'], password=new_userform.cleaned_data['password2'])
-            auth.login(request, newuser)
-            return HttpResponseRedirect("/")
+    if request.method == "POST":
+        user = User.objects.create_user(username=request.POST['username'], password=request.POST['password'])
+        if user is not None:
+            return render_to_response('login.html', {'error': 'We have a user with such name'})
         else:
-            args['form'] = new_userform
+            user = User.objects.create_user(request.POST['username'], request.POST['password'])
+
+            user.save()
+            custom_user = User.objects.create(User=user)
+            custom_user.save()
     else:
         return render_to_response('registration.html', {})
 

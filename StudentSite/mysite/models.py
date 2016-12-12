@@ -9,3 +9,10 @@ class Help_materials(models.Model):
     discipline = models.CharField(max_length=50)
     year_discipline = models.IntegerField()
     upload_material = models.FileField(upload_to='downloads/')
+
+    def dict(self):
+        return {'faculty': self.faculty,
+                'professor': self.professor,
+                'discipline': self.discipline,
+                'year_discipline': self.year_discipline,
+                'upload_material': self.upload_material.url}
