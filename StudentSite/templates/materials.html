@@ -5,6 +5,22 @@
     <title>All Materials</title>
 </head>
 <body>
+{% if user %}
+    <form method="post" enctype="multipart/form-data">
+
+    <input type="file" name="material">
+        <input type="text" name="faculty">
+        <input type="text" name="discipline">
+        <input type="text" name="year">
+        <input type="text" name="professor">
+
+
+
+    <button type="submit">
+        send
+    </button>
+    </form>
+{% endif %}
 {% for material in materials %}
     <h6><a href="/materials/get/{{ material.id }}/">{{ material.upload_material}} </a></h6>
 {% endfor %}

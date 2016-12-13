@@ -52,10 +52,10 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware'
 ]
 
-MIDDLEWARE_CLASSES = [
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware'
-]
+# MIDDLEWARE_CLASSES = [
+#     'django.middleware.common.CommonMiddleware',
+#     'django.middleware.csrf.CsrfViewMiddleware'
+# ]
 
 ROOT_URLCONF = 'StudentSite.urls'
 
