@@ -31,9 +31,12 @@ def logout(request):
 
 def register(request):
     if request.method == "POST":
-        user = User.objects.create_user(username=request.POST['username'], password=request.POST['password'])
+        user = User.objects.create_user(username=request.POST['username'], password=request.POST['password'],
+                                        password2=request.POST['password'])
         if user is not None:
-            return render_to_response('login.html', {'error': 'We have a user with such name'})
+            return render_to_response('registration.html', {'error': 'We have a user with such name'})
+        # elif:
+        #    //
         else:
             user = User.objects.create_user(request.POST['username'], request.POST['password'])
 

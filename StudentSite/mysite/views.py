@@ -49,8 +49,6 @@ def material_by_id(request, material_id):
         render_to_response('404.html', context_instance=RequestContext(request))
 
 
-
-
 def uplouded_file(f):
     with open(os.path.join(settings.MEDIA_ROOT, f.name), 'wb+') as destination:
         for chunk in f.chunks():
