@@ -1,12 +1,5 @@
-from django.shortcuts import render, render_to_response, redirect
-from mysite.models import Help_materials
-from django.template import RequestContext
-from django.contrib import auth
-from django.contrib.auth import authenticate
-from django.contrib.auth import login as dj_login
-from django.contrib.auth import logout as dj_logout
 
-from django.http import HttpResponseRedirect
+from mysite.models import Help_materials
 from django.http import HttpResponse
 import json
 from django.contrib.auth.models import User
