@@ -11,7 +11,8 @@ class Help_materials(models.Model):
     upload_material = models.FileField(upload_to='downloads/')
 
     def dict(self):
-        return {'faculty': self.faculty,
+        return {'id':self.id,
+                'faculty': self.faculty,
                 'professor': self.professor,
                 'discipline': self.discipline,
                 'year_discipline': self.year_discipline,

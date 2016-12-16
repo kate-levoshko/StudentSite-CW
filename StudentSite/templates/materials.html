@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
@@ -12,34 +11,58 @@
     <title>Materials</title>
        <style>
            .center {
-                width: 250px;
-                height: 10px;
+                width: 150px;
+                height: 60px;
                 top: 30%;
-                left: 10%;
-                margin: 50px ;
-
+                left: 100%;
+                margin: 100px ;
            }
+           .btn-file {
+               position: relative;
+               overflow: hidden;
+            }
+
+           .btn-file input[type=file] {
+                position: absolute;
+                top: 0;
+                right: 0;
+                min-width: 100%;
+                min-height: 100%;
+                font-size: 100px;
+                text-align: right;
+                filter: alpha(opacity=0);
+                opacity: 0;
+                outline: none;
+                background: white;
+                cursor: inherit;
+                display: block;
+            }
         </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+      <script>
+          $(document).ready(function(){
+              $("#searchButton").click(function(){
+                  btn = $(this);
+                  inp = $("#search");
+            $.ajax({type: "GET", url:"/search", data: {search: inp.val(), xhr: true}, success: function(result){
 
+                var materials = jQuery.parseJSON(result);
+                $(".addMaterial").remove();
+                for (i in materials){
+                    $("#addMaterial").append('<div class="post addMaterial"> <h6><a href="/materials/get/' +  materials[i].id + '/">' + materials[i].upload_material + ' </a></h6> </div>');
+                };
+            }});
+        });
+    });
+          </script>
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
   </head>
 
   <body>
-
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -52,55 +75,60 @@
           <a class="navbar-brand" href="/">KPI Student Helper</a>
         </div>
           <ul class="nav navbar-nav">
-            <li><a href="/about/">About</a></li>
-            <li><a href="/materials/all/">Materials</a></li>
+              <li><a href="/about/">About</a></li>
+              <li><a href="/contacts/">Contacts</a></li>
+              <li><a href="/materials/all/">Materials</a></li>
           </ul>
 
         <div id="navbar" class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right">
-            <input type="text" class="form-control" placeholder="Search...">
+          <form class="navbar-form navbar-right" id="form_search">
+
               {% if user %}
-                  <a class="btn btn-danger" href="/auth/logout/" role="button">Sign out({{ username }})</a>
+                  <a class="btn btn-danger" href="/auth/logout/" role="button">Sign out({{ user_name }})</a>
                   <a class="btn btn-info" href="/account/" role="button">Profile</a>
               {% else %}
                   <a class="btn btn-success" href="/auth/login/" role="button">Sign in</a>
                   <a class="btn btn-default" href="/auth/register/" role="button">Registration</a>
               {% endif %}
-
           </form>
+
         </div>
-      </div>
+          <input type="text" class="form-control" id="search" placeholder="Search...">
+          <button class="btn btn-success" id="searchButton">Search</button>
+
+        </div>
+
     </nav>
 
-
-       <div class="center">
-      <div class="container">
+    <div class="center">
+    <br>      </br>
        {% if user %}
         <form method="post" enctype="multipart/form-data">
-
             <input type="text" id="faculty" name="faculty" class="form-control" placeholder="Faculty" required>
             <input type="text" id="discipline" name="discipline" class="form-control" placeholder="Discipline" required>
             <input type="text" id="year" name="year" class="form-control" placeholder="Year" required>
             <input type="text" id="professor" name="professor" class="form-control" placeholder="Professor" required>
-            <input type="file" name="material">
+            <span class="btn btn-default btn-file">
+             Choose file<input type="file" name="material">
+            </span>
+            <button class="btn btn-primary" id="send" type="submit">Send</button>
 
+        </form>
+        {% endif %}
+        <br> </br>
 
-    <button type="submit">
-        send
-    </button>
-    </form>
-{% endif %}
+    <div id="addMaterial">
+        {% for material in materials %}
+            <div class="post addMaterial">
+                 <h6><a href="/materials/get/{{ material.id }}/">{{ material.upload_material}} </a></h6>
+            </div>
+        {% endfor %}
+</div>
 
-{% for material in materials %}
-    <h6><a href="/materials/get/{{ material.id }}/">{{ material.upload_material}} </a></h6>
-{% endfor %}
-      </div>
     </div>
-
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </body>
 </html>

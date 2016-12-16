@@ -18,8 +18,11 @@ urlpatterns = [
     url(r'^auth/logout/', log_views.logout),
     url(r'^auth/register/', log_views.register),
     url(r'^about/', views.about),
+    url(r'^contacts/', views.contacts),
+    url(r'^account/', views.account),
     url(r'^api/materials/all/', all_materials),
     url(r'^api/materials/get/(\d+)/$', material_by_id),
+    url(r'^search',views.search),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

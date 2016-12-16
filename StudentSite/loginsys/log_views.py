@@ -31,17 +31,16 @@ def logout(request):
 
 def register(request):
     if request.method == "POST":
-        user = User.objects.create_user(username=request.POST['username'], password=request.POST['password'],
-                                        password2=request.POST['password'])
-        if user is not None:
-            return render_to_response('registration.html', {'error': 'We have a user with such name'})
-        # elif:
-        #    //
-        else:
-            user = User.objects.create_user(request.POST['username'], request.POST['password'])
-
-            user.save()
-            custom_user = User.objects.create(User=user)
-            custom_user.save()
+        try:
+            user = User.objects.get(username=request.POST['username'])
+            if user is not None:
+                return render(request, 'registration.html', {'login_error': 'User with such name is already exists'})
+        except:
+            if request.POST['password'] == request.POST['password2']:
+                user = User.objects.create_user(username=request.POST['username'], password=request.POST['password'])
+                user.save()
+                return login(request)
+            else:
+                return render(request,'registration.html', {'pass_error': 'Passwords are not similar'})
     else:
-        return render_to_response('registration.html', {})
+        return render(request, 'registration.html', {})
