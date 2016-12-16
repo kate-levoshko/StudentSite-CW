@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^api/materials/all/', all_materials),
     url(r'^api/materials/get/(\d+)/$', material_by_id),
     url(r'^search',views.search),
+    url(r'^bucket', views.bucket),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

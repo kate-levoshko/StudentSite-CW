@@ -37,6 +37,10 @@
                 cursor: inherit;
                 display: block;
             }
+           #search {
+               width: 300px;
+           }
+
         </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
       <script>
@@ -55,6 +59,23 @@
         });
     });
           </script>
+      <script>
+        $(document).ready(function(){
+            $(".add").click(function(){
+                btn = $(this);
+               alert(btn.attr("value"));
+                $.ajax({type: "POST", url:"/bucket", data: {add: btn.attr("value"), xhr: true}, success: function(result){
+                     var status = jQuery.parseJSON(result);
+                    if(status.status !== "ok"){
+                        alert(status.status)
+                    }
+                    else{
+                       btn.hide();
+                    };
+            }});
+        });
+    });
+      </script>
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -74,17 +95,27 @@
           </button>
           <a class="navbar-brand" href="/">KPI Student Helper</a>
         </div>
-          <ul class="nav navbar-nav">
+          <ul class="nav navbar-nav inline">
               <li><a href="/about/">About</a></li>
               <li><a href="/contacts/">Contacts</a></li>
               <li><a href="/materials/all/">Materials</a></li>
           </ul>
 
-        <div id="navbar" class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" id="form_search">
+          <ul class="list-inline">
+               <li>
+                   <div class="input-group stylish-input-group">
+                     <div>
+                         <br>
+                        <input type="text" class="form-control" id="search"  placeholder="Search...">
+                         <button class="btn btn-success " id="searchButton">Search</button>
+                     </div>
+                   </div>
+               </li>
 
-              {% if user %}
-                  <a class="btn btn-danger" href="/auth/logout/" role="button">Sign out({{ user_name }})</a>
+        <div  class="navbar-collapse collapse pull-right">
+          <form class="navbar-form "> {% csrf_token %}
+              {% if user.is_authenticated %}
+                  <a class="btn btn-danger" href="/auth/logout/" role="button">Sign out({{ user.username }})</a>
                   <a class="btn btn-info" href="/account/" role="button">Profile</a>
               {% else %}
                   <a class="btn btn-success" href="/auth/login/" role="button">Sign in</a>
@@ -92,18 +123,21 @@
               {% endif %}
           </form>
 
+            <li> <div>
+                 <a class="btn btn-primary" href="/bucket/" role="button">Bucket</a>
+                 </div>
         </div>
-          <input type="text" class="form-control" id="search" placeholder="Search...">
-          <button class="btn btn-success" id="searchButton">Search</button>
+              </li>
+          </ul>
+      </div>
 
-        </div>
 
     </nav>
 
     <div class="center">
-    <br>      </br>
-       {% if user %}
-        <form method="post" enctype="multipart/form-data">
+    <br>
+       {% if user.is_authenticated %}
+        <form method="post" enctype="multipart/form-data"> {% csrf_token %}
             <input type="text" id="faculty" name="faculty" class="form-control" placeholder="Faculty" required>
             <input type="text" id="discipline" name="discipline" class="form-control" placeholder="Discipline" required>
             <input type="text" id="year" name="year" class="form-control" placeholder="Year" required>
@@ -112,18 +146,20 @@
              Choose file<input type="file" name="material">
             </span>
             <button class="btn btn-primary" id="send" type="submit">Send</button>
-
         </form>
         {% endif %}
-        <br> </br>
+        <br>
 
     <div id="addMaterial">
         {% for material in materials %}
             <div class="post addMaterial">
-                 <h6><a href="/materials/get/{{ material.id }}/">{{ material.upload_material}} </a></h6>
+                 <h6><a href="/materials/get/{{ material.id }}/">{{ material.upload_material.url}} </a></h6>
+                {% if material not in user.my_material.all %}
+                    <button class="btn btn-primary" id="add" value={{ material.id }} type="submit">Add</button>
+                {% endif %}
             </div>
         {% endfor %}
-</div>
+    </div>
 
     </div>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

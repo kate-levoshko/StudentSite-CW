@@ -13,7 +13,7 @@ from django.http import HttpResponse
 # from django.contrib.auth.models import User
 # import sys
 
-import  json, os
+import json, os
 
 def home (request):
     if request.user.is_authenticated():
@@ -55,20 +55,39 @@ def all_materials(request):
                                             discipline=request.POST['discipline'])
         else:
             print("Form is invalid")
-    return render_to_response('materials.html', {'materials': Help_materials.objects.all(), 'user_name': auth.get_user(request).username, "user": request.user.is_authenticated} )
+    print( Help_materials.objects.all())
+    return render(request, 'materials.html', {'materials': Help_materials.objects.all(),  "user": request.user} )
 
 
 def material_by_id(request, material_id):
      try:
-         return render_to_response('material.html', {'material': Help_materials.objects.get(id=int(material_id))})
+         username = request.user.username
+         return render(request, 'material.html', {'material': Help_materials.objects.get(id=int(material_id)), 'username': username })
      except:
-        render_to_response('404.html', context_instance=RequestContext(request))
+        username = None
+        render(request, '404.html', context_instance=RequestContext(request))
 
 
 def uplouded_file(f):
     with open(os.path.join(settings.MEDIA_ROOT, f.name), 'wb+') as destination:
         for chunk in f.chunks():
             destination.write(chunk)
+
+def bucket(request):
+    args = {}
+    if request.method == "GET":
+        args['user'] = request.user
+        args['materials'] = request.user.my_material.all()
+        return render(request, 'materials.html', args)
+    elif request.method == "POST":
+        request.POST['add']
+    elif request.method == "DELETE":
+        try:
+            Help_materials.users.though.objects.get(user_id=int(request.GET['user']), material_id=request.material.id).delete()
+        except:
+            return HttpResponse(json.dumps({"status": "error"}), content_type="application/json")
+            return HttpResponse(json.dumps({"status": "ok"}), content_type="application/json")
+
 
 def search(request):
     materials_fac = Help_materials.objects.none()

@@ -36,7 +36,7 @@
           </ul>
 
         <div id="navbar" class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right">
+          <form class="navbar-form navbar-right"> {% csrf_token %}
               {% if username %}
                    <a class="btn btn-danger" href="/auth/logout/" role="button">Sign out({{ username }})</a>
                   <a class="btn btn-info" href="/account/" role="button">Profile</a>
