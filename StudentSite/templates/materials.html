@@ -58,8 +58,7 @@
             }});
         });
     });
-          </script>
-      <script>
+
           function getCookie(name) {
         var cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -90,11 +89,10 @@
         $(document).ready(function(){
             $(".add").click(function(){
                 btn = $(this);
-
                 $.ajax({type: "POST", url:"/bucket", data: {add: btn.attr("value"), xhr: true}, success: function(result){
 
                     if(result.status !== "ok"){
-                        alert(result.status);
+                       
                     }
                     else{
                        btn.hide();
@@ -181,7 +179,7 @@
 
     <div id="addMaterial">
         {% for material in materials %}
-            <div class="post addMaterial">
+            <div class="post add">
                  <h6><a href="/materials/get/{{ material.id }}/">{{ material.upload_material.name}} </a></h6>
                 {% if material not in user.my_material.all %}
                     <button class="btn btn-primary add" value={{ material.id }} type="submit">Add</button>

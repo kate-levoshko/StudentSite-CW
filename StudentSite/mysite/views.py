@@ -80,7 +80,8 @@ def bucket(request):
         args['materials'] = request.user.my_material.all()
         return render(request, 'materials.html', args)
     elif request.method == "POST":
-        request.POST['add']
+        request.user.my_material.add(Help_materials.objects.get(id=int( request.POST['add'])))
+        return HttpResponse(json.dumps({"status": "ok"}), content_type="application/json")
     elif request.method == "DELETE":
         try:
             Help_materials.users.though.objects.get(user_id=int(request.GET['user']), material_id=request.material.id).delete()
