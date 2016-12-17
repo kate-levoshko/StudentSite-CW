@@ -47,7 +47,7 @@ def all_materials(request):
     if request.method == "POST":
         form = forms.upload_file_form(request.POST, request.FILES)
         if form.is_valid():
-            uplouded_file(request.FILES['material'])
+            #uplouded_file(request.FILES['material'])
             Help_materials.objects.create(upload_material=request.FILES['material'],
                                             faculty=request.POST['faculty'],
                                             year_discipline=int(request.POST['year']),
