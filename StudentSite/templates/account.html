@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,14 +14,113 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="starter-template.css" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="shortcut icon" href="http://cs8.pikabu.ru/post_img/big/2016/12/12/8/1481546085176190884.png" type="image/png">
   </head>
-<body>
 
+  <body>
+   <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">KPI Student Helper</a>
+        </div>
+          <ul class="nav navbar-nav">
+              <li><a href="/about/">About</a></li>
+              <li><a href="/contacts/">Contacts</a></li>
+              <li><a href="/materials/all/">Materials</a></li>
+          </ul>
 
+        <div id="navbar" class="navbar-collapse collapse">
+          <form class="navbar-form navbar-right">
+              {% if username %}
+                  <a class="btn btn-danger" href="/auth/logout/" role="button">Sign out({{ username }})</a>
+                  <a class="btn btn-info" href="/account/" role="button">Profile</a>
+              {% else %}
+                  <a class="btn btn-success" href="/auth/login/" role="button">Sign in</a>
+                  <a class="btn btn-default" href="/auth/register/" role="button">Registration</a>
+              {% endif %}
+          </form>
+        </div>
+      </div>
+    </nav>
 
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<div class="container">
+  <div class="row">
+    <div class="col-md-2 col-lg-3 col-xs-0 col-sm-1"></div>
+    <div class="col-md-8 col-lg-6 col-xs-12 col-sm-10">
+      <div class="row" style="position: relative; ">
+        <div class="col-md-9 col-xs-10 col-xs-offset-1">
+            <br> <br>
+          <h2 style="text-align: center;">Account</h2>
+          <div class="row"><p></p></div>
+          <form class="form-horizontal" role="form" style="user-select: none; -webkit-user-select: none;">
+            <div class="form-group" style="margin-left: 0; margin-right: 0;">
+
+              <label for="inputEmail1" class="col-lg-4 col-xs-3 control-label">E-mail</label>
+
+              <div class="col-lg-7 col-xs-8">
+                <div class="row">
+                  <input type="email" class="alert alert-success form-control" id="inputEmail" placeholder="abc@gmail.com" style="margin-bottom: 0;">
+                </div>
+              </div>
+
+            </div>
+
+            <div class="form-group" style="margin-left: 0; margin-right: 0; user-select: none;">
+              <label for="inputPassword1" class="col-lg-4 col-xs-3 control-label">Name</label>
+              <div class="col-lg-7 col-xs-8">
+                <div class="row">
+                  <input type="name" class="alert1 alert-success1 form-control" id="name" placeholder="Your name" style="margin-bottom: 0;" required>
+                </div>
+              </div>
+            </div>
+            <div class="form-group" style="margin-left: 0; margin-right: 0;">
+
+              <label for="inputPassword1" class="col-lg-4 col-xs-3 control-label">Surname</label>
+
+              <div class="col-lg-7 col-xs-8">
+                <div class="row">
+                  <input type="text" class="form-control" id="inputFIO"  placeholder="Your surname" style="margin-bottom: 0;" required>
+                </div>
+              </div>
+
+                 <label for="inputPassword1" class="col-lg-4 col-xs-3 control-label">Login</label>
+
+              <div class="col-lg-7 col-xs-8">
+                <div class="row">
+                  <input type="text" class="form-control" id="inputFIO"  placeholder="Username" value={{ username }} style="margin-bottom: 0;" required>
+                </div>
+              </div>
+            </div>
+            <div class="form-group" style="margin-left: 0; margin-right: 0;">
+              <div class="col-lg-offset-4 col-xs-offset-3 col-lg-7 col-xs-8">
+                <div class="row">
+                  <button type="submit" class="btn btn-info">Сохранить</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2 col-lg-3 col-xs-0 col-sm-1"></div>
+  </div>
+</div>
+
+      <footer class="footer">
+        <p>&copy; 2016 KPI project</p>
+      </footer>
+
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</body>
+  </body>
 </html>

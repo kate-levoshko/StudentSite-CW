@@ -60,14 +60,41 @@
     });
           </script>
       <script>
+          function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
         $(document).ready(function(){
             $(".add").click(function(){
                 btn = $(this);
-               alert(btn.attr("value"));
+
                 $.ajax({type: "POST", url:"/bucket", data: {add: btn.attr("value"), xhr: true}, success: function(result){
-                     var status = jQuery.parseJSON(result);
-                    if(status.status !== "ok"){
-                        alert(status.status)
+
+                    if(result.status !== "ok"){
+                        alert(result.status);
                     }
                     else{
                        btn.hide();
@@ -80,7 +107,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-
+ <link rel="shortcut icon" href="http://cs8.pikabu.ru/post_img/big/2016/12/12/8/1481546085176190884.png" type="image/png">
   </head>
 
   <body>
@@ -124,7 +151,9 @@
           </form>
 
             <li> <div>
+                {% if user.is_authenticated %}
                  <a class="btn btn-primary" href="/bucket/" role="button">Bucket</a>
+                {% endif %}
                  </div>
         </div>
               </li>
@@ -153,9 +182,9 @@
     <div id="addMaterial">
         {% for material in materials %}
             <div class="post addMaterial">
-                 <h6><a href="/materials/get/{{ material.id }}/">{{ material.upload_material.url}} </a></h6>
+                 <h6><a href="/materials/get/{{ material.id }}/">{{ material.upload_material.name}} </a></h6>
                 {% if material not in user.my_material.all %}
-                    <button class="btn btn-primary" id="add" value={{ material.id }} type="submit">Add</button>
+                    <button class="btn btn-primary add" value={{ material.id }} type="submit">Add</button>
                 {% endif %}
             </div>
         {% endfor %}
