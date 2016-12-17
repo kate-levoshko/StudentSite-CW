@@ -47,7 +47,7 @@ def all_materials(request):
     if request.method == "POST":
         form = forms.upload_file_form(request.POST, request.FILES)
         if form.is_valid():
-            #uplouded_file(request.FILES['material'])
+            uplouded_file(request.FILES['material'])
             Help_materials.objects.create(upload_material=request.FILES['material'],
                                             faculty=request.POST['faculty'],
                                             year_discipline=int(request.POST['year']),
@@ -80,7 +80,13 @@ def bucket(request):
         args['materials'] = request.user.my_material.all()
         return render(request, 'materials.html', args)
     elif request.method == "POST":
-        request.POST['add']
+        try:
+            print(request.POST['add'])
+            id = int (request.POST['add'])
+            request.user.my_material.add(Help_materials.objects.get(id = id))
+            return HttpResponse(json.dumps({"status": "ok"}), content_type="application/json")
+        except:
+            return HttpResponse(json.dumps({"status": "error"}), content_type="application/json")
     elif request.method == "DELETE":
         try:
             Help_materials.users.though.objects.get(user_id=int(request.GET['user']), material_id=request.material.id).delete()
