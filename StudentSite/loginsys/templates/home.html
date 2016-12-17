@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>KPI Student Helper</title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">KPI Student Helper</a>
+        </div>
+          <ul class="nav navbar-nav">
+              <li><a href="/about/">About</a></li>
+              <li><a href="/contacts/">Contacts</a></li>
+              <li><a href="/materials/all/">Materials</a></li>
+          </ul>
+
+        <div id="navbar" class="navbar-collapse collapse">
+          <form class="navbar-form navbar-right"> {% csrf_token %}
+              {% if username %}
+                   <a class="btn btn-danger" href="/auth/logout/" role="button">Sign out({{ username }})</a>
+                  <a class="btn btn-info" href="/account/" role="button">Profile</a>
+              {% else %}
+                  <a class="btn btn-success" href="/auth/login/" role="button">Sign in</a>
+                  <a class="btn btn-default" href="/auth/register/" role="button">Registration</a>
+              {% endif %}
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Welcome!</h1>
+        <p>This is a site for students of NTUU "KPI"! You can find all useful information and done works. It will be easy for you to prepare for any kind of module.</p>
+        <p><a class="btn btn-primary btn-lg" href="/about/" role="button">Learn more &raquo;</a></p>
+      </div>
+    </div>
+
+    <div class="container marketing">
+      <div class="row">
+        <div class="col-lg-4">
+            <img src="http://kpi.ua/files/images/kpi.png" class="img-circle" alt="Generic placeholder image" width="140" height="140">
+            <h2>KPI schedule</h2>
+            <p>The site with KPI schedule</p>
+            <p><a class="btn btn-default" href="http://rozklad.kpi.ua/" role="button">Go to site &raquo;</a></p>
+        </div>
+        <div class="col-lg-4">
+          <img class="img-circle" src="https://pp.vk.me/c5736/v5736918/51d/L8tjueGZiO8.jpg" alt="Generic placeholder image" width="140" height="140">
+          <h2>Official site of the University</h2>
+          <p>The site with official information at the University</p>
+          <p><a class="btn btn-default" href="http://kpi.ua/" role="button">Go to site &raquo;</a></p>
+        </div>
+        <div class="col-lg-4">
+          <img class="img-circle" src="https://pp.vk.me/c633322/v633322357/17a89/cs3XAgOUXOw.jpg" alt="Generic placeholder image" width="140" height="140">
+          <h2>KPI live</h2>
+          <p>KPI live - an informal community of KPI, has no relation to the KPI administration.</p>
+          <p><a class="btn btn-default" href="https://vk.com/kpi_live" role="button">Go to site &raquo;</a></p>
+        </div>
+      </div>
+
+        <footer class="footer">
+            <p>&copy; 2016 KPI project</p>
+        </footer>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </div>
+  </body>
+</html>

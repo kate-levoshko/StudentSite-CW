@@ -1,25 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Material</title>
+</head>
+<body>
+
+
+ <footer class="footer">
+            <p>&copy; KPI project</p>
+ </footer>
+
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Autorisation</title>
-        <style>
-           .center {
-                width: 250px;
-                height: 250px;
-                position: absolute;
-                top: 30%;
-                left: 50%;
-                margin: -125px 0 0 -125px;
-
-           }
-        </style>
+    <title>Object</title>
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -44,44 +51,36 @@
               <li><a href="/contacts/">Contacts</a></li>
               <li><a href="/materials/all/">Materials</a></li>
           </ul>
+
+        <div id="navbar" class="navbar-collapse collapse">
+          <form class="navbar-form navbar-right">
+              {% if username %}
+                   <a class="btn btn-danger" href="/auth/logout/" role="button">Sign out({{ username }})</a>
+                  <a class="btn btn-info" href="/account/" role="button">Profile</a>
+              {% else %}
+                  <a class="btn btn-success" href="/auth/login/" role="button">Sign in</a>
+                  <a class="btn btn-default" href="/auth/register/" role="button">Registration</a>
+              {% endif %}
+          </form>
+        </div>
       </div>
     </nav>
 
-
-    <div class="center">
-
-    <form class="form-signin" action="/auth/login/" method="post"> {% csrf_token %}
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <div class="large-offset-3 large-6 columns">
-             <label for="username" class="sr-only">Username</label>
-             <input type="text" name="username" id="username" class="form-control" placeholder="Username" required autofocus>
-             <label for="inputPassword" class="sr-only">Password</label>
-       <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
-         <div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
-        </div>
-        {% if login_error %}
-            <label class="error">{{ login_error }}</label>
-        {% endif %}
-        <button class="btn btn-primary " type="submit">Sign in</button>
-         <div class="label round secondary"><a href="/auth/register/">Registration</a></div>
-        </div>
-    </form>
-   </div>
-
-     <footer class="footer">
-            <p>&copy; 2016 KPI project</p>
-     </footer>
+    <div class="container marketing">
+      <div class="row">
+          <br>   </br>
+            <a href="{{ material.upload_material.url}}">File</a>
+              <h4>{{ material.faculty }} </h4>
+              <h4>{{ material.professor }} </h4>
+              </h4>{{ material.discipline }} </h4>
+              <h4>{{ material.year_discipline }} </h4>
+      </div>
+    </div>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </div>
   </body>
 </html>
-
-
-
-
