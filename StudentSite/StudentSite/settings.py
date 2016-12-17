@@ -64,8 +64,7 @@ ROOT_URLCONF = 'StudentSite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -102,6 +101,7 @@ DATABASES = {
         #'PORT': '8000',
     }
 }
+
 db_from_env = dj_database_url.config()
 DATABASES['default'].update(db_from_env)
 
