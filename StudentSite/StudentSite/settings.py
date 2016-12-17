@@ -11,9 +11,11 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+import dj_database_url
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+#BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,7 +27,7 @@ SECRET_KEY = 'd2hmgzvw#5cu^obi5!h=m$&w34@gh1$t+lsev&nj5i6g@)zf!='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -92,15 +94,16 @@ WSGI_APPLICATION = 'StudentSite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'kateadmin',
-        'HOST': '',
-        'PORT': '8000',
+        #'ENGINE': 'django.db.backends.postgresql',
+        #'NAME': 'postgres',
+       #'USER': 'postgres',
+        #'PASSWORD': 'kateadmin',
+        #'HOST': '',
+        #'PORT': '8000',
     }
 }
-
+db_from_env = dj_database_url.config()
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -138,7 +141,27 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
+
+#MEDIA_ROOT =os.path.join(BASE_DIR, 'materials')
+#MEDIA_URL = '/materials/'
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+ALLOWED_HOSTS = ['*']
+
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
 
-MEDIA_ROOT =os.path.join(BASE_DIR, 'materials')
-MEDIA_URL = '/materials/'
+MEDIA_ROOT= os.path.join(PROJECT_ROOT, 'media')
+MEDIA_URL = 'https://storage.googleapis.com/garage-fun-1509/media/'
+
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_ROOT, 'static'),
+)
+
+GS_ACCESS_KEY_ID = 'GOOGJWOB2QCHE2LYO3MW'
+GS_SECRET_ACCESS_KEY = 'ECcIhakXjtu9JbquLXedTnhpK99wBKWAmTbIld+n'
+GS_BUCKET_NAME = 'garage-fun-1509'
+#STATICFILES_STORAGE = 'storages.backends.gs.GSBotoStorage'
+DEFAULT_FILE_STORAGE = 'storages.backends.gs.GSBotoStorage'
